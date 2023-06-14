@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
     return;
   }
 
-  res.setHeader("Access-Control-Allow-Origin", urlClient);
+  res.setHeader("Access-Control-Allow-Origin", process.env.ORIGIN);
   // Make a GET request to the Reddit API to fetch top posts for the specified subreddit
   axios
     .get("http://www.reddit.com/r/" + subreddit + "/top.json")
