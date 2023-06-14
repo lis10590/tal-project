@@ -1,11 +1,12 @@
 const express = require("express");
 const app = express();
-const PORT = 3005;
+
 const axios = require("axios");
 const cors = require("cors");
-
+require("dotenv").config();
+const PORT = process.env.PORT;
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: process.env.ORIGIN,
   credentials: true,
 };
 
@@ -53,7 +54,12 @@ app.get("/", (req, res) => {
 // if (process.env.NODE_ENV === 'production') {
 //   app.use(express.static('reddit-app/build'));
 // }
-
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 app.listen(PORT, () => {
   console.log(`Reddit app listening on port ${PORT}`);
 });
